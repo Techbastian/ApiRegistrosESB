@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "rules": {
+    "linebreak-style": 0,
+    "object-curly-spacing": ["error", "never"],
+    "no-unused-vars": ["warn", { "args": "none", "caughtErrors": "none" }],
+    "max-len": 0
+  }
+
+}
