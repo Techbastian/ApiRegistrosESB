@@ -69,7 +69,7 @@ router.put("/api/registers/:register_id", async (req, res) => {
   try {
     const data = req.body || {};
     const doc = db.collection("registros").doc(req.params.register_id);
-    await doc.set(data);
+    await doc.update(data);
     return res.status(200).json({message: "Registro actualizado"});
   } catch (error) {
     console.error(error);
