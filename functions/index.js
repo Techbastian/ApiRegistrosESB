@@ -24,14 +24,27 @@ setGlobalOptions({maxInstances: 10});
 const functions = require("firebase-functions");
 // const admin = require("firebase-admin");
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
+
+// Configure CORS
+// Permite configurar orígenes permitidos mediante variable de entorno
+// Si no se define, permite todos los orígenes (útil para desarrollo)
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : true,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 // Parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.get("/hello-world", (req, res) => {
+app.get("/", (req, res) => {
   return res.status(200).json({message: "Hello World!"});
 });
 
