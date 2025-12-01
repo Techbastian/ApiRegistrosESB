@@ -14,11 +14,11 @@ router.post("/api/registers", async (req, res) => {
     const docId = data && data.context && data.context.chat_id;
 
     if (docId) {
-      await db.collection("registros").doc(docId).set(data);
+      await db.collection("usersProfile").doc(docId).set(data);
       return res.status(200).json({message: "Registro creado", id: docId});
     }
 
-    const ref = await db.collection("registros").add(data);
+    const ref = await db.collection("usersProfile").add(data);
     return res.status(200).json({message: "Registro creado", id: ref.id});
   } catch (error) {
     console.error(error);
@@ -28,7 +28,7 @@ router.post("/api/registers", async (req, res) => {
 
 router.get("/api/registers", async (req, res) => {
   try {
-    const query = db.collection("registros");
+    const query = db.collection("usersProfile");
     const querySnapshot = await query.get();
     const docs = querySnapshot.docs;
 
@@ -44,7 +44,7 @@ router.get("/api/registers", async (req, res) => {
 
 router.get("/api/registers/:register_id", async (req, res) => {
   try {
-    const doc = db.collection("registros").doc(req.params.register_id);
+    const doc = db.collection("usersProfile").doc(req.params.register_id);
     const item = await doc.get();
     const response = item.data();
     return res.status(200).json(response);
@@ -56,7 +56,7 @@ router.get("/api/registers/:register_id", async (req, res) => {
 
 router.delete("/api/registers/:register_id", async (req, res) => {
   try {
-    const doc = db.collection("registros").doc(req.params.register_id);
+    const doc = db.collection("usersProfile").doc(req.params.register_id);
     await doc.delete();
     return res.status(200).json({message: "Registro eliminado"});
   } catch (error) {
@@ -80,7 +80,7 @@ router.put("/api/registers/:register_id", async (req, res) => {
       return res.status(400).json({message: "No hay datos para actualizar"});
     }
 
-    const docRef = db.collection("registros").doc(registerId);
+    const docRef = db.collection("usersProfile").doc(registerId);
     const doc = await docRef.get();
 
     // Verificar que el documento existe antes de actualizar
